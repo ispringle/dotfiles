@@ -1,0 +1,46 @@
+#Aliases
+alias vim="nvim"
+alias v="nvim"
+alias mutt="neomutt"
+alias copy="xclip -selection c"
+
+alias c="clear"
+
+#ls
+alias ll="ls -l"
+alias la="ls -a"
+alias lal="ls -la"
+
+#cd
+alias ..="cd .."
+alias ~="cd ~"
+
+#configs
+alias vi3="vim ~/.config/i3/config"
+alias bashrc="vim ~/.bashrc"
+alias aliases="vim ~/.bash_aliases"
+alias vimrc="vim ~/.config/nvim"
+
+#shortcuts
+alias wttr="curl -s wttr.in/24504 | sed -n 3,7p" 
+alias gh='cd ~/git/hub/'
+alias ghp='cd ~/git/hub/pard68'
+alias ghpm='cd ~/git/hub/pard68/miscellanea'
+alias ix="curl -F 'f:1=<-' ix.io"
+
+alias tf="terraform"
+
+alias r="ranger"
+
+# GTD / Taskwarrior Stuff
+
+alias t="task"
+alias ts="task sync"
+alias ti='task in'
+alias in='task add +in'
+alias tick=tickle
+alias think='tickle +1d'
+#alias rnd='task add +rnd'
+alias rnd='task add +rnd +next +@computer +@online'
+alias rnr=read_and_review
+alias idea='task add +idea'

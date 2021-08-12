@@ -1,0 +1,44 @@
+# Bash Functions and Scripts
+
+# MAC: Make And Change [Directoy]
+mac()
+{
+	mkdir -p -- "$1" &&
+	cd -P -- "$1"
+}
+
+#Gets pidof program and then kills it
+killp()
+{
+	PID=$(pidof $1)
+	kill $PID
+}
+
+# source /home/ian/.config/bashconf/password-store-completion
+
+#Read online articles in Markdown
+read_article()
+{
+	curl -L heckyesmarkdown.com/go/?u=$1
+}
+
+# GTD / Taskwarrior Stuff
+
+tickle () {
+    deadline=$1
+    shift
+    in +tickle wait:$deadline $@
+}
+
+webpage_title (){
+    wget -qO- "$*" | hxselect -s '\n' -c  'title' 2>/dev/null
+}
+
+read_and_review (){
+    link="$1"
+    title=$(webpage_title $link)
+    echo $title
+    descr="\"Read and review: $title\""
+    id=$(task add +next +rnr "$descr" | sed -n 's/Created task \(.*\)./\1/p')
+    task "$id" annotate "$link"
+}
