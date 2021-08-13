@@ -2,3 +2,13 @@ config.el
 cli.el
 init.el
 packages.el
+
+{{- if ne .chezmoi.os "linux" }}
+# Linux-only apps
+.config/i3
+.config/i3blocks
+.config/rofi
+{{- end }}
+{{- if ne .chezmoi.os "darwin" }}
+# Mac-only apps
+{{- end }}
