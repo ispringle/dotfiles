@@ -1,8 +1,14 @@
 # terminal emulator specific
-if xprop -notype -id $WINDOWID 2>&1| awk '/^WM_CLASS.*kitty/' | grep "kitty" > /dev/null
-  alias ssh="kitty +kitten ssh"
-  alias icat="kitty +kitten icat"
-end
+# if xprop -notype -id $WINDOWID 2>&1| awk '/^WM_CLASS.*kitty/' | grep "kitty" > /dev/null
+#   alias ssh="kitty +kitten ssh"
+#   alias icat="kitty +kitten icat"
+# end
+
+# chezmoi
+abbr cz "chezmoi"
+abbr cza "chezmoi add"
+abbr cze "chezmoi edit"
+abbr czcd "chezmoi cd"
 
 # clear
 abbr c "clear -x"
@@ -19,6 +25,9 @@ abbr db "docker build"
 abbr dbt "docker build -t"
 abbr dr "docker run"
 abbr drit "docker run -it"
+
+# emacs
+abbr e "emacs"
 
 # git
 abbr g "git"

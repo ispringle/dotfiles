@@ -28,9 +28,9 @@
 set --export SHELL /usr/bin/fish
 set --export EDITOR /bin/nvim
 set --export VISUAL $EDITOR
-set --export NOTMUCH_CONFIG ~/.config/notmuch/config
-set --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
-set --export LEDGER_FILE ~/docs/budget/current
+# set --export NOTMUCH_CONFIG ~/.config/notmuch/config
+# set --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
+# set --export LEDGER_FILE ~/docs/budget/current
 set -e fish_greeting
 
 # Ensure fisher package manager is installed
