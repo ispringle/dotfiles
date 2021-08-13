@@ -1,0 +1,261 @@
+"Ian Pringle's (pard68) .vimrc files
+
+syntax	enable			"enable syntax processing
+set enc=utf-8
+"Set line numbers to on, then toggle both relative and actual number line on and off with Ctrl-N,Ctrl-N and Alt-n,Alt-N
+set number				"show line numbers
+set relativenumber		"show relative line numbers
+let mapleader = " "
+
+function! Line_Toggle() "Toggle no numbers, absolute, relative, relative w/ absolute on cursor line
+    :exe 'set nu!' &nu ? 'rnu!' : ''
+endfunction
+
+" Map Line_toggle to Ctrl+N in Normal mode
+":nmap <C-N> :call Line_Toggle()<CR> 
+:nmap <leader>n :call Line_Toggle()<CR> 
+
+"Insert date/time stamps
+nmap <leader>d :put =strftime('%Y/%m/%d')<CR>
+nmap <leader>t :put =strftime('%T')<CR>
+nmap <leader>dt :put =strftime('%Y/%m/%d - %T (%Z)')<CR>
+
+"Set all tabs to 4 spaces
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+"set expandtab			"turn <TAB> into a shortcut for spaces
+
+"More tab rules
+set autoindent
+set noexpandtab
+
+"Set whitespace characters list
+set list listchars=eol:┑,tab:›‐,trail:~,extends:>,precedes:<
+
+"Selection Rules
+set virtualedit=block
+xnoremap < <gv
+xnoremap > >gv
+
+"UI Config
+set showcmd				"show command in bottom bar
+set cursorline			"hight current line
+set wildmenu			"Show menu for options
+set lazyredraw			"limits amount of time that vim redraws when using macros
+set showmatch			"highlights matching brackets
+
+"Search options
+set incsearch			"search as characters are entered
+set hlsearch			"highlight matches
+
+"stop hightling search results on space
+nnoremap <leader><space> :nohlsearch<CR> 
+
+"Folding options
+set foldenable			"Enable folding
+set foldlevelstart=10	"Folding starts at 10
+set foldnestmax=10		"Max of 10 nested folds
+set foldmethod=indent	"Folding levels are based on indents
+
+"Movement options
+
+"Unmap arrow keys
+no <down> <Nop>
+no <up> <Nop>
+no <left> <Nop>
+no <right> <Nop>
+ino <down> <Nop>
+ino <up> <Nop>
+ino <left> <Nop>
+ino <right> <Nop>
+vno <down> <Nop>
+vno <up> <Nop>
+vno <left> <Nop>
+vno <right> <Nop>
+
+" Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+"NULL
+
+"vim-plug auto install
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+"Begin vim-plug pluggins
+call plug#begin('~/.vim/plugged')
+
+"Pywal Colorscheme Sync, src: https://github.com/dylanaraps/wal.vim/blob/master/colors/wal.vim
+"Plug 'dylanaraps/wal.vim'
+
+"Gruvbox Theme, src: https://github.com/morhetz/gruvbox
+Plug 'morhetz/gruvbox'
+
+"vim-instant-markdown, src: https://github.com/suan/vim-instant-markdown
+"Also needs the npm package 'instand-markdown-d'
+" Plug 'suan/vim-instant-markdown'
+
+"vim-peekaboo, src: https://github.com/junegunn/vim-peekaboo
+"Allows viewing contents of register from " or @ in normal mode and Ctrl R in
+"inser mode
+Plug 'junegunn/vim-peekaboo'
+
+"lightline, src: https://github.com/itchyny/lightline.vim
+"A minimalist powerline/airline
+Plug 'itchyny/lightline.vim'
+
+"vimwiki, src https://github.com/vimwiki/vimwiki
+"A personal wiki for Vim
+Plug 'vimwiki/vimwiki'
+
+"taskwiki, src https://github.com/tbabej/taskwiki
+"todo addon for vimwiki
+Plug 'tbabej/taskwiki'
+
+"vim-plugin-AnsiEsc, src https://github.com/powerman/vim-plugin-AnsiEsc
+" Color support for charts
+Plug 'powerman/vim-plugin-AnsiEsc'
+
+"tagbar, src https://github.com/majutsushi/tagbar
+"taskwiki file navigation
+Plug 'majutsushi/tagbar'
+
+"vim-taskwarrior, src https://github.com/farseer90718/vim-taskwarrior
+"taskwarrior support for vimwiki
+Plug 'farseer90718/vim-taskwarrior'
+
+"sneak, src https://github.com/justinmk/vim-sneak
+"Jump to a location based on two chars
+Plug 'justinmk/vim-sneak'
+
+"Goyo, src https://github.com/junegunn/goyo.vim
+"Distraction-free vim!
+Plug 'junegunn/goyo.vim'
+
+"Writing mode for vim
+Plug 'reedes/vim-pencil'
+
+"limelight
+Plug 'junegunn/limelight.vim'
+
+"litecorect
+Plug 'reedes/vim-litecorrect'
+
+"rust syntax 
+"Plug 'rust-lang/rust.vim'
+
+"Syntastic
+"Plug 'vim-syntastic/syntastic'
+
+"surround.vim
+Plug 'tpope/vim-surround'
+
+"yaml-vim
+Plug 'mrk21/yaml-vim'
+
+"End of vim-plug. All plugs must go above this
+call plug#end()
+
+"Call builtin Vim plugins
+
+
+"set colorscheme
+"colorscheme wal
+let g:gruvbox_contrast_dark = '(soft)'
+let g:gruvbox_italic = '(0)'
+colorscheme gruvbox
+set background=dark
+"hi Normal guibg=NONE ctermbg=NONE
+
+filetype plugin on
+
+let g:limelight_conceal_ctermfg = 'darkgray'
+"Goyo toggle settings
+nmap <leader>g :Goyo<CR>:set spell!<CR>:Limelight<CR>
+nmap <leader>p :PencilToggle<CR>
+"vim-pencil settings
+"augroup pencil
+"	autocmd!
+"	autocmd FileType markdown,md,mkd	call pencil#init()
+"									\ | call litecorrect#init()
+"	autocmd FileType text				call pencil#init()
+"augroup end
+
+"Minimalist EasyMotion with Sneak
+let g:sneak#label = 1
+
+"Decimal/Heximal Conversion funcs
+command! -nargs=? -range Dec2hex call s:Dec2hex(<line1>, <line2>, '<args>')
+function! s:Dec2hex(line1, line2, arg) range
+  if empty(a:arg)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V\<\d\+\>/\=printf("0x%x",submatch(0)+0)/g'
+    else
+      let cmd = 's/\<\d\+\>/\=printf("0x%x",submatch(0)+0)/g'
+    endif
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      echo 'Error: No decimal number found'
+    endtry
+  else
+    echo printf('%x', a:arg + 0)
+  endif
+endfunction
+
+command! -nargs=? -range Hex2dec call s:Hex2dec(<line1>, <line2>, '<args>')
+function! s:Hex2dec(line1, line2, arg) range
+  if empty(a:arg)
+    if histget(':', -1) =~# "^'<,'>" && visualmode() !=# 'V'
+      let cmd = 's/\%V0x\x\+/\=submatch(0)+0/g'
+    else
+      let cmd = 's/0x\x\+/\=submatch(0)+0/g'
+    endif
+    try
+      execute a:line1 . ',' . a:line2 . cmd
+    catch
+      echo 'Error: No hex number starting "0x" found'
+    endtry
+  else
+    echo (a:arg =~? '^0x') ? a:arg + 0 : ('0x'.a:arg) + 0
+  endif
+endfunction
+
+" Buffer Management
+
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+"YAML stuf
+au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
