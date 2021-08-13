@@ -1,0 +1,9 @@
+[user]
+	name = Ian S Pringle
+	{{ if regexMatch "*.-work" .chezmoi.hostname }}
+	email = {{ .email.work | quote }}
+	{{ else }}
+	email = {{ .email.personal | quote }}
+	{{ end }}
+[github]
+	user = pard68
