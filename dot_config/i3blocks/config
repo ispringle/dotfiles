@@ -1,0 +1,67 @@
+#############
+## DEFAULTS ##
+##############
+
+command=/usr/libexec/i3blocks/$BLOCK_NAME
+separator_block_width=25
+color=#d8dee9
+markup=pango
+align=center
+#color=#666666
+
+############
+## BLOCKS ##
+############
+
+[active-window]
+command=bash ~/.config/i3blocks/blocklets/active-window
+color=#eceff4
+interval=1
+
+[now-playing]
+command=bash ~/.config/i3blocks/blocklets/cmus-playing
+color=#eceff4
+interval=1
+
+[weather]
+command=bash ~/.config/i3blocks/blocklets/weather
+interval=10
+color=#eceff4
+
+[volume]
+command=sh ~/.config/i3blocks/blocklets/volume
+label= 
+instance=Master
+#instance=PCM
+interval=once
+signal=10
+color=#eceff4
+
+# [wifi]
+# command=bash /home/ian/.config/i3blocks/blocklets/wifi
+# label=WIFI
+# label=直
+# interval=10
+
+[battery]
+command=bash /home/ian/.config/i3blocks/blocklets/battery
+#label=BAT
+label=
+interval=5
+color=#eceff4
+
+[calendar]
+command=bash /home/ian/.config/i3blocks/blocklets/calendar
+label= 
+color=#eceff4
+
+[pomo]
+command=bash /home/ian/.config/i3blocks/blocklets/pomo.sh $button
+label=🍅
+color=#eceff4
+
+[time]
+command=bash /home/ian/.config/i3blocks/blocklets/time
+label= 
+interval=1
+color=#eceff6

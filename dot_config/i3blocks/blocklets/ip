@@ -1,0 +1,4 @@
+ip=$(wget -qO - ipv4.icanhazip.com)
+
+echo "$ip"
+echo "$ip"

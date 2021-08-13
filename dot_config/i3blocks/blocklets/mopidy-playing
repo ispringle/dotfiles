@@ -1,0 +1,6 @@
+#Shamelessly ripped from https://github.com/ronno/scripts/blob/master/xsetcmus.sh
+
+if ps -C ncmpcpp > /dev/null; then
+	playing=`mpc current`
+	echo "Now Playing: $playing"; else echo ""; 
+fi

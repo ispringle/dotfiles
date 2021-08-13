@@ -1,0 +1,13 @@
+#!/bin/bash
+
+case $BLOCK_BUTTON in
+  1) headsetcontrol -cl 0 ;; # left click, RGB off
+  3) headsetcontrol -cl 1 ;; # right click, RGB on
+  4) headsetcontrol -cs ;; # scroll up, increase
+  5) headsetcontrol -cs ;; # scroll down, decrease
+esac
+
+battery=$(headsetcontrol -cb 2>/dev/null)
+if [ ! -z $battery -a "$battery" != "-2" ]; then
+  echo "🎧 $battery%"
+fi
