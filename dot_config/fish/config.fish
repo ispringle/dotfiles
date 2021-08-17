@@ -25,8 +25,8 @@
 #  ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ;
 
 # Set export/globals
-set --export SHELL /usr/bin/fish
-set --export EDITOR /bin/nvim
+set --export SHELL /usr/local/bin/fish
+set --export EDITOR /usr/local/bin/nvim
 set --export VISUAL $EDITOR
 # set --export NOTMUCH_CONFIG ~/.config/notmuch/config
 # set --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)

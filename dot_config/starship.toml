@@ -1,18 +1,7 @@
 add_newline = false
-prompt_order = [
-                "directory",
-                "git_branch",
-                "git_commit",
-                "git_state",
-                "git_status",
-                "command_duration",
-                "line_break",
-                "character"
-]
 
 [character]
 error_symbol = "✗"
-use_symbol_for_status = true
 
 # Directory Module
 [directory]

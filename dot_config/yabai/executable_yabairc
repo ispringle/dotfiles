@@ -60,8 +60,8 @@ yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
 # let spacebar handle bar
-SPACEBAR_HEIGHT=$(spacebar -m config height)
-yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
+# SPACEBAR_HEIGHT=$(spacebar -m config height)
+yabai -m config external_bar all:22:0
 
 ### SIGNALS
 
