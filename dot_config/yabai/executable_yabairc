@@ -89,4 +89,7 @@ yabai -m rule --add title='Preferences$' manage=off
 # float settings windows
 yabai -m rule --add title='Settings$' manage=off
 
+# force emacs to tile
+yabai -m rule --add app='Emacs' manage=on
+
 echo "yabai configuration loaded.."

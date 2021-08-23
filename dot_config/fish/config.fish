@@ -51,7 +51,7 @@ end
 # set -g pure_symbol_git_dirty 
 
 # Set PATH
-set -gx PATH /home/ian/.cargo/bin:/home/ian/go/bin:/home/ian/.local/bin:/home/ian/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:/home/ian/.emacs.d/bin/
+set -gx PATH $HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:$HOME/.emacs.d/bin/
 
 if type -q starship
   starship init fish | source
