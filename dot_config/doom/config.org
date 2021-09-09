@@ -205,7 +205,6 @@ And this means we don't have to wait for Emacs to recompile our config on each s
 (setq user-full-name "Ian S. Pringle"
       user-mail-address "ian@dapringles.com")
 
-(setq doom-theme 'doom-moonlight)
 #+end_src
 
 ** A E S T H E T I C
@@ -264,7 +263,7 @@ listing the missing fonts should appear for at least half a second.
 
 *** Theme
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-nova)
+(setq doom-theme 'doom-nord-light)
 (remove-hook 'window-setup-hook #'doom-init-theme-h)
 (add-hook 'after-init-hook #'doom-init-theme-h 'append)
 (delq! t custom-theme-load-path)
@@ -574,6 +573,7 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
        markdown
        (org +journal +pomodoro +pretty)
        (python +lsp +poetry)
+       rest
        rust
        (sh +lsp)
        web
@@ -630,7 +630,7 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
 *** Settings
 Let's add auto save to org buffers.
 #+begin_src emacs-lisp
-(add-hook 'auto-save-hook 'org-save-all-org-buffers)
+;;(add-hook 'auto-save-hook 'org-save-all-org-buffers)
 #+end_src
 
 Now to fix some defaults:
@@ -650,10 +650,14 @@ Now to fix some defaults:
 (setq org-agenda-files '("~/org/"))
 (setq deft-directory "~/org/")
 (setq +org-capture-inbox "~/org/inbox.org")
+(setq +org-package-tracking-inbox "~/org/tracking.org")
 
 #+end_src
 
 **** Org Keywords
+#+CAPTION: Task State Workflow
+#+NAME: Normal Task Workflow
+[[file:normal_task_states.png]]
 #+begin_src emacs-lisp
 (after! org
   (setq org-todo-keywords
@@ -713,7 +717,10 @@ Now to fix some defaults:
            "* CALL %? :CALL:\n%U" :clock-in t :clock-resume t)
 
           ("h" "Habit" entry (file +org-capture-inbox)
-           "* NEXT %?\n%U\n%a\nSCHEDULED: %<<%Y-%m-%d %a .+1d/3d>>\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+           "* NEXT %?\n%U\n%a\nSCHEDULED: %<<%Y-%m-%d %a .+1d/3d>>\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
+
+          ("s" "Package tracking" entry (file +org-package-tracking-inbox)
+           "* PENDING %?\n%U"))))
 #+end_src
 
 **** Org Clocking
