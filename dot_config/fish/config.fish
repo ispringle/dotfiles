@@ -24,14 +24,22 @@
 # .  `  `. ` .  ` .  ` .  ` .  ` .  ` .  ` .    .  ` .  ` .  ` .  ` .  `
 #  ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ;
 
+# Set PATH
+set -gx PATH $HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:$HOME/.emacs.d/bin/:$HOME/.npm-global/bin
+
 # Set export/globals
 set --export SHELL /usr/local/bin/fish
-set --export EDITOR /usr/local/bin/nvim
+if command -v lvim > /dev/null
+  set --export EDITOR lvim
+else
+  set --export EDITOR /usr/local/bin/nvim
+end
 set --export VISUAL $EDITOR
 # set --export NOTMUCH_CONFIG ~/.config/notmuch/config
 # set --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 # set --export LEDGER_FILE ~/docs/budget/current
 set -e fish_greeting
+set --export HOMEBREW_BREWFILE_APPSTORE 0
 
 # Ensure fisher package manager is installed
 if not functions -q fisher
@@ -49,9 +57,6 @@ end
 # set -g pure_symbol_git_unpulled_commits 
 # set -g pure_symbol_git_unpushed_commits 
 # set -g pure_symbol_git_dirty 
-
-# Set PATH
-set -gx PATH $HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:$HOME/.emacs.d/bin/
 
 if type -q starship
   starship init fish | source

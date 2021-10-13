@@ -94,7 +94,7 @@ to add a few bells and whistles --- namely:
   and instead take a flag to suppress this behaviour (~-w~).
 
 I would use =sh=, but using arrays for argument manipulation is just too
-convenient, so I'll raise the requirement to =bash=. Since arrays are the only
+convenient, so I'll raise the requirement to =bash=. Since arrays arehe only
 'extra' compared to =sh=, other shells like =ksh= etc. should work too.
 
 #+name: e
@@ -203,7 +203,8 @@ And this means we don't have to wait for Emacs to recompile our config on each s
 ** Personal Info
 #+begin_src emacs-lisp
 (setq user-full-name "Ian S. Pringle"
-      user-mail-address "ian@dapringles.com")
+      user-mail-address "ian@dapringles.com"
+      auth-sources '("~/.authinfo"))
 
 #+end_src
 
@@ -424,8 +425,12 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
 #+begin_src emacs-lisp
 (setq org-src-preserve-indentation t)
 #+end_src
-
-
+*** Key Mappings
+#+begin_src emacs-lisp
+(map! :leader
+      (:prefix "o"
+       :desc "Open ielm" "I" #'ielm))
+#+end_src
 * Doom's =init.el=
 #+name: init.el
 #+attr_html: :collapsed t
@@ -548,6 +553,7 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
        (lsp +peek)
        (magit +forge)
        make
+       pdf
        rgb
        terraform
        tmux
@@ -566,16 +572,30 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
 #+begin_src emacs-lisp :tangle no
        data
        emacs-lisp
-       (go +lsp)
+       (go
+        +lsp)
        json
-       (javascript +lsp)
-       (lua +lsp)
+       (javascript
+        +lsp)
+       latex
+       ;;ledger
+       (lua
+        +lsp)
        markdown
-       (org +journal +pomodoro +pretty)
-       (python +lsp +poetry)
+       (org
+        +present
+        +noter
+        +dragndrop
+        +pomodoro
+        +pretty
+        +roam2)
+       (python
+        +lsp
+        +poetry)
        rest
        rust
-       (sh +lsp)
+       (sh
+        +lsp)
        web
        yaml
 #+end_src
@@ -598,7 +618,7 @@ This rewrites Doom's org-mode hook to be async. If my literate config ever gets 
 #+name: doom-config
 #+begin_src emacs-lisp :tangle no
        literate
-       (default +bindings +Smartparens)
+       (default +bindings +smartparens)
 #+end_src
 * Packages
 ** hl-todo
@@ -646,12 +666,20 @@ Now to fix some defaults:
 **** Org Directories
 #+begin_src emacs-lisp
 ;; Much of my org setup was stolen from http://doc.norang.ca/org-mode.html
-(setq org-directory "~/org/")
-(setq org-agenda-files '("~/org/"))
-(setq deft-directory "~/org/")
-(setq +org-capture-inbox "~/org/inbox.org")
-(setq +org-package-tracking-inbox "~/org/tracking.org")
-
+(after! org-agenda
+    (setq
+     org_notes (concat (getenv "HOME") "/org")
+     org-directory org_notes
+     deft-directory org_notes
+     org-roam-directory (concat org_notes "/grok/org/")
+     org-roam-dailies-directory (concat org_notes "/daily")
+     +org-capture-inbox (concat org_notes "/inbox.org")
+     org-agenda-files (apply 'append
+                             (mapcar
+                              (lambda (directory)
+                                (directory-files-recursively
+                                 directory org-agenda-file-regexp))
+                              (list org_notes )))))
 #+end_src
 
 **** Org Keywords
@@ -668,9 +696,10 @@ Now to fix some defaults:
         (sequence "WAIT(w@/!)"
                   "HOLD(h@/!)"
                   "|"
-                  "KILL(c@/!)"
+                  "KILL(k@/!)"
                   "CALL"
-                  "MEET")))
+                  "MEET"
+                  "REVIEW")))
 
   (setq org-todo-keyword-faces
         '(("TODO" :foreground "#ff757f" :weight bold)
@@ -680,7 +709,8 @@ Now to fix some defaults:
           ("HOLD" :foreground "magenta" :weight bold)
           ("KILL" :foreground "c3e88d" :weight bold)
           ("MEET" :foreground "c3e88d" :weight bold)
-          ("CALL" :foreground "c3e88d" :weight bold)))
+          ("CALL" :foreground "c3e88d" :weight bold)
+          ("REVIEW" :foreground "c3e88d" :weight bold)))
 
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
@@ -694,33 +724,43 @@ Now to fix some defaults:
         ("DONE" ("WAIT") ("KILL") ("HOLD"))))
 #+end_src
 
+**** Org tags
+#+begin_src emacs-lisp
+(after! org
+  (setq org-tag-alist '(("@errand" . ?e)
+                        ("@work" . ?o)
+                        ("@home" . ?H)
+                        ("@farm" . ?f)
+                        ("|")
+                        ("KILL" . ?k))))
+#+end_src
 **** Org Capture Templates
 #+begin_src emacs-lisp
   (setq org-capture-templates
         '(("t" "Todo" entry (file +org-capture-inbox)
-           "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+           "* TODO %?\nCREATED: %U\n" :clock-in t :clock-resume t)
 
           ("r" "Respond" entry (file +org-capture-inbox)
-           "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n"
+           "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\nCREATED: %U\n%a\n"
            :clock-in t :clock-resume t :immediate-finish t)
 
           ("n" "Note" entry (file +org-capture-inbox)
-           "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
+           "* %? :NOTE:\n%U\nCREATED:%U\n%a\n" :clock-in t :clock-resume t)
 
           ("w" "Org-protocol" entry (file +org-capture-inbox)
-           "* TODO Review %c\n%U\n" :immediate-finish t)
+           "* REVIEW %a\n%:initial\nCREATED: %U" :immediate-finish t)
 
           ("m" "Meeting" entry (file +org-capture-inbox)
-           "* MEET with %? :MEET:\n%U" :clock-in t :clock-resume t)
+           "* MEET with %? :MEET:\nCREATED: %U" :clock-in t :clock-resume t)
 
           ("p" "Phone call" entry (file +org-capture-inbox)
-           "* CALL %? :CALL:\n%U" :clock-in t :clock-resume t)
+           "* CALL %? :CALL:\nCREATED: %U" :clock-in t :clock-resume t)
 
           ("h" "Habit" entry (file +org-capture-inbox)
-           "* NEXT %?\n%U\n%a\nSCHEDULED: %<<%Y-%m-%d %a .+1d/3d>>\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
+           "* NEXT %?\nCREATED: %U\n%a\nSCHEDULED: %<<%Y-%m-%d %a .+1d/3d>>\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n")
 
-          ("s" "Package tracking" entry (file +org-package-tracking-inbox)
-           "* PENDING %?\n%U"))))
+          ("s" "Package tracking" entry (file +org-capture-inbox)
+           "* PENDING %?\nCREATED: %U"))))
 #+end_src
 
 **** Org Clocking
@@ -870,6 +910,7 @@ A prefix arg forces clock in of the default task."
     (org-with-point-at clock-in-to-task
       (org-clock-in nil))))
 #+end_src
+
 *** Easier org buffers
 #+begin_src emacs-lisp
 (evil-define-command evil-buffer-org-new (count file)
@@ -889,32 +930,25 @@ A prefix arg forces clock in of the default task."
 #+end_src
 
 *** Org Modules and Packages
+**** org-super-agenda
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-super-agenda)
+#+end_src
+#+begin_src emacs-lisp
+(use-package! org-super-agenda
+  :after org-agenda
+  :config
+  (setq org-super-agenda-groups '(
+    (:name "Today" :date today)
+    (:name "Inbox" :file-path "inbox.org")
+    (:name "Review" :file-path "inbox.org" :todo "REVIEW")
+    (:name "Next(s)" :todo "NEXT")))
+  (org-super-agenda-mode))
+#+end_src
 **** org-habits
 Include the habit module for reoccuring tasks
 #+begin_src emacs-lisp
 (add-to-list 'org-modules 'org-habits)
-#+end_src
-
-**** org-super-agenda
-A superior org-agenda view.
-#+begin_src emacs-lisp :tangle "packages.el"
-(package! org-super-agenda :pin "0bb6326...")
-#+end_src
-#+begin_src emacs-lisp :noweb-ref none :tangle yes
-(use-package! org-super-agenda
-  :commands org-super-agenda-mode)
-#+end_src
-
-#+begin_src emacs-lisp
-(after! org-agenda
-  (org-super-agenda-mode))
-
-(setq org-agenda-skip-scheduled-if-done t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-block-separator nil
-      org-agenda-tags-column 100
-      org-agenda-compact-blocks t)
 #+end_src
 
 **** org-pretty-table
@@ -970,7 +1004,195 @@ Capture recipes from urls!!!
 (use-package! org-chef
   :commands (org-chef-insert-recipe org-chef-get-recipe-from-url))
 #+end_src
+**** org-timeline
+Blocked time view for org-agenda
+#+begin_src emacs-lisp :tangle "packages.el"
+;;(package! org-timeline)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+;;(use-package! org-timeline)
+;;(after! org-agenda
+  ;;(add-hook 'org-agenda-finalize-hook 'org-timeline-insert-timeline :append))
+#+end_src
+
+**** org-roam
+Unpin so we are using the latest MELPA version, we need this to make use of the ui package
+#+begin_src emacs-lisp :tangle "packages.el"
+(unpin! org-roam)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(after! org-roam
+  (setq org-roam-db-gc-threshold most-positive-fixnum
+        org-link-to-org-use-id t)
+  (set-popup-rules!
+    `((,(regexp-quote org-roam-buffer) ; persistent org-roam buffer
+       :side right :width .33 :height .5 :ttl nil :modeline nil :quit nil :slot 1)
+      ("^\\*org-roam: " ; node dedicated org-roam buffer
+       :side right :width .33 :height .5 :ttl nil :modeline nil :quit nil :slot 2)))
+  (add-hook 'org-roam-mode-hook #'turn-on-visual-line-mode)
+  (setq org-roam-capture-templates
+        '(("d" "default" plain
+           "%?"
+           :if-new (file+head "${slug}.org"
+                              "#+title: ${title}\n")
+           :immediate-finish t
+           :unnarrowed t)
+          ("r" "bibliography reference" plain "%?"
+           :if-new
+           (file+head "references/${citekey}.org" "#+title: ${title}\n")
+           :unnarrowed t)))
+  (set-company-backend! 'org-mode '(company-capf))
+  (require 'org-roam-protocol))
+(use-package! org-roam-dailies
+  :init
+  (map! :leader
+        :prefix "n"
+        :desc "org-roam-dailies-capture-today" "j" #'org-roam-dailies-capture-today)
+  :config
+  (setq org-roam-dailies-capture-templates
+                '(("d" "default" entry
+                   "* %?"
+                   :if-new (file+head "%<%Y-%m-%d>.org"
+                                      "#+TITLE: %<%Y-%m-%d>\n")))))
+(use-package! org-roam-protocol
+  :after org-protocol)
+#+end_src
+
+**** org-roam-ui
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! websocket)
+(package! org-roam-ui :recipe
+  (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! websocket
+  :after org-roam)
+(use-package! org-roam-ui
+  :after org-roam
+  :commands org-roam-ui-mode
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-port 35900
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start nil))
+#+end_src
+
+**** org-roam-bibtex
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! org-roam-bibtex)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! org-roam-bibtex
+  :after org-roam
+  :config
+  (require 'org-ref))
+#+end_src
+
+**** org-ref
+#+begin_src emacs-lisp :tangle yes
+(after! org-ref
+  (setq org-ref-default-bibliography `,(list (concat org-roam-directory "works.bib"))))
+#+end_src
+
 *** Misc.
+**** Archive items
+This is my stop-gap. But it flattens the structure and hides potentially valuable metadata...
+#+begin_src emacs-lisp :tangle yes
+(after! org-agenda
+  (setq org-archive-mark-done nil
+        org-archive-location "%s_archive::* Archived Tasks")
+
+  (defun 0x44/skip-non-archivable-items ()
+    "Skip trees that cannot be archieved"
+    (save-restriction
+        (widen)
+        (let ((next-headline (save-excursion (or (outline-next-heading) (point-max))))
+            (subtree-end (save-excursion (org-end-of-subtree t))))
+        (if (member (org-get-todo-state) org-todo-keywords-1)
+            (if (member (org-get-todo-state) org-done-keywords)
+                (let* ((daynr (string-to-int (format-time-string "%d" (current-time))))
+                        (a-month-ago (* 60 60 24 (+ daynr 1)))
+                        (last-month (format-time-string "%Y-%m-"
+                                                        (time-subtract (current-time)
+                                                                       (seconds-to-time a-month-ago))))
+                        (this-month (format-time-string "%Y-%m-" (current-time)))
+                        (subtree-is-current (save-excursion
+                                            (forward-line 1)
+                                            (and (< (point) subtree-end)
+                                                    (re-search-forward (concat
+                                                                        last-month
+                                                                        "\\|"
+                                                                        this-month)
+                                                                       subtree-end t)))))
+                    (if subtree-is-current
+                        subtree-end ; Has a date in this month or last month, skip it
+                    nil))  ; available to archive
+                (or subtree-end (point-max)))
+            next-headline)))))
+#+end_src
+
+
+When I archive an item I want to mimic the project tree to the archive file,
+there is meaning in the tree and if we archive without copying the tree that archived item loses meaning.
+However right now I cannot figure it out and I don't have the time. This sorta works, but not well
+enough to use it...
+#+begin_src emacs-lisp :tangle yes
+(defun 0x44/crawl-project-tree ()
+         (setq project-tree (list (nth 4 (org-heading-components))))
+         (save-excursion
+            (while (org-up-heading-safe)
+                (setq project-tree (append (list (nth 4 (org-heading-components))) project-tree))))
+         project-tree)
+
+(defun 0x44/refile-to (file headline)
+  (let ((pos (save-excursion
+               (find-file file)
+               (org-find-exact-headline-in-buffer headline))))
+    (if pos
+        (org-refile nil nil (list headline file nil pos))
+        (message (format "Headline [%s] does not exist" headline)))))
+
+(defun 0x44/recreate-project-tree (tree)
+  (setq heading "*")
+  (while tree
+    (print (format "%s %s" heading (pop tree)))
+    (setq heading (concat heading "*"))))
+
+(defun 0x44/map-project-tree ()
+  (org-refile nil nil '("Headline" "file" nil 1))
+  (interactive)
+  (0x44/recreate-project-tree (0x44/crawl-project-tree)))
+#+end_src
+
+**** org-agenda refile
+#+begin_src emacs-lisp :tangle yes
+(after! org-agenda
+  (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                   (org-agenda-files :maxlevel . 9)))
+        org-refile-use-outline-path t
+        org-outline-path-complete-in-steps nil
+        org-refile-allow-creating-parent-nodes (quote confirm))
+(defun 0x44/org-refile-verify-target ()
+  "Excluse DONE state tasks from refile targets"
+  (not (member (nth 2 (org-heading-components)) org-done-keywords))))
+#+end_src
+
+**** org-agenda review
+#+begin_src emacs-lisp :tangle yes
+(defun 0x44/org-agenda-review-item ()
+  "Review items in org-agenda"
+  (interactive)
+  (org-with-wide-buffer
+   (org-agenda-set-tags)
+   (org-agenda-priority)
+   (org-agenda-set-effort)
+   (org-agenda-refile nil nil t)))
+
+(map! :map org-agenda-mode-map
+      "R" #'0x44/org-agenda-review-item)
+#+end_src
+
 **** BH's Helper Functions
 [[http://doc.norang.ca/org-mode.html#Clocking][Sourced]]
 #+begin_src emacs-lisp
@@ -1236,8 +1458,55 @@ Better AST parsing and syntax highlighting!
 #+end_src
 #+begin_src emacs-lisp :tangle yes
 (use-package! tree-sitter
+  :hook
+  (prog-mode . global-tree-sitter-mode)
   :config
   (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
 #+end_src
+
+** kubernetes-el
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! kubernetes)
+(package! kubernetes-evil)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! kubernetes
+  :commands (kubernetes-overview))
+(use-package! kubernetes-evil
+  :after kubernetes)
+#+end_src
+
+** company-posframe
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! company-posframe)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! company-posframe
+  :config
+  (require 'company-posframe)
+  (company-posframe-mode 1))
+#+end_src
+
+** git-link
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! git-link)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! git-link
+  :commands
+  (git-link git-link-commit git-link-homepage)
+  :custom
+  (git-link-use-commit 1))
+#+end_src
+
+** easy-kill
+#+begin_src emacs-lisp :tangle "packages.el"
+(package! easy-kill)
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+(use-package! easy-kill
+  :bind*
+  (([remap kill-ring-save] . easy-kill)))
+#+end_src
+** Custom Packages

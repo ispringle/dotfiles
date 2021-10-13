@@ -2,17 +2,29 @@
 # tap repositories and their packages
 
 tap homebrew/core
+brew adwaita-icon-theme
+brew ansible
 brew aom
+brew argo
+brew assimp
+brew atk
 brew autoconf
+brew automake
 brew bdw-gc
+brew brotli
 brew c-ares
+brew ca-certificates
 brew cairo
 brew chezmoi
 brew cmake
+brew dbus
+brew desktop-file-utils
 brew docbook
 brew docbook-xsl
+brew double-conversion
 brew fd
 brew fish
+brew flux
 brew fontconfig
 brew freetype
 brew fribidi
@@ -21,37 +33,62 @@ brew gd
 brew gdbm
 brew gdk-pixbuf
 brew gettext
+brew gh
 brew ghostscript
 brew glib
+brew gmime
 brew gmp
 brew gnu-getopt
 brew gnu-sed
+brew gnupg
 brew gnuplot
 brew gnutls
+brew go
 brew gobject-introspection
+brew gpgme
 brew graphite2
 brew grep
+brew gsettings-desktop-schemas
+brew gtk+
+brew gtk+3
+brew gtk-mac-integration
 brew guile
 brew harfbuzz
+brew hicolor-icon-theme
+brew hunspell
 brew icu4c
 brew imagemagick
 brew imath
+brew intltool
 brew isl
+brew ispell
 brew jansson
+brew jasper
 brew jbig2dec
 brew jemalloc
 brew jpeg
+brew kubectx
+brew kubernetes-cli
+brew libassuan
+brew libb2
 brew libcerf
 brew libde265
+brew libepoxy
 brew libev
 brew libevent
 brew libffi
 brew libgccjit
+brew libgcrypt
+brew libgpg-error
 brew libheif
 brew libidn
 brew libidn2
+brew libksba
 brew liblqr
+brew libmagic
 brew libmpc
+brew libnghttp2
+brew libnotify
 brew libomp
 brew libpng
 brew libpthread-stubs
@@ -62,6 +99,7 @@ brew libtermkey
 brew libtiff
 brew libtool
 brew libunistring
+brew libusb
 brew libuv
 brew libvterm
 brew libx11
@@ -72,20 +110,29 @@ brew libxext
 brew libxrender
 brew libyaml
 brew little-cms2
+brew lsd
 brew lua
 brew luajit-openresty
 brew luv
 brew lzo
 brew m4
-brew mas
+brew md4c
+brew meson
 brew mpdecimal
 brew mpfr
 brew msgpack
+brew mu
 brew ncurses
 brew neofetch
 brew neovim
 brew nettle
 brew nghttp2
+brew ninja
+brew node
+brew npth
+brew nspr
+brew nss
+brew offlineimap
 brew openexr
 brew openjpeg
 brew openssl@1.1
@@ -93,23 +140,37 @@ brew p11-kit
 brew pango
 brew pcre
 brew pcre2
+brew pinentry
 brew pixman
 brew pkg-config
+brew platformio
+brew poppler
+brew pyenv
+brew python-tabulate
+brew python@3.10
 brew python@3.9
+brew qt
 brew qt@5
 brew readline
 brew ripgrep
 brew rust
 brew screenresolution
 brew shared-mime-info
+brew shellcheck
+brew six
+brew sops
+brew sphinx-doc
 brew sqlite
 brew starship
+brew telnet
+brew terraform
 brew texinfo
 brew tree-sitter
 brew unbound
 brew unibilium
 brew webp
 brew x265
+brew xapian
 brew xmlto
 brew xorgproto
 brew xz
@@ -129,7 +190,9 @@ cask font-overpass
 tap homebrew/services
 
 tap homebrew/cask
+cask adoptopenjdk
 cask alfred
+cask basictex
 cask brave-browser
 cask discord
 cask docker
@@ -137,10 +200,14 @@ cask firefox
 cask fly
 cask hammerspoon
 cask kitty
+cask obsidian
+cask postman
 cask rectangle
 cask signal
 cask slack
+cask synergy
 cask ukelele
+cask visual-studio-code
 cask zoom
 
 tap cmacrae/formulae
@@ -148,15 +215,17 @@ tap cmacrae/formulae
 tap d12frosted/emacs-plus
 brew emacs-plus@28 --with-native-comp --with-modern-sexy-v1-icon
 
+tap fluxcd/tap
+
+tap hivemq/mqtt-cli
+brew mqtt-cli
+
 tap koekeishiya/formulae
 brew skhd
 
 tap rcmdnk/file
 brew brew-file
 
-# App Store applications
-appstore 682658836   GarageBand  (10.4.2)
-appstore 408981434   iMovie      (10.2.2)
-appstore 409183694   Keynote     (10.3.9)
-appstore 409203825   Numbers     (10.3.9)
-appstore 409201541   Pages       (10.3.9)
+tap zegervdv/zathura
+brew girara --HEAD
+brew zathura --HEAD

@@ -15,14 +15,15 @@ abbr c "clear -x"
 abbr c! "clear"
 
 # configs
-abbr vi3 "nvim ~/.config/i3/config"
-abbr fishrc "nvim ~/.config/fish"
-abbr vimrc "nvim ~/.config/nvim"
+abbr vi3 "$EDITOR ~/.config/i3/config"
+abbr fishrc "$EDITOR ~/.config/fish"
+abbr vimrc "$EDITOR ~/.config/nvim"
 
 # docker
 abbr d "docker"
 abbr db "docker build"
 abbr dbt "docker build -t"
+abbr dp "docker push"
 abbr dr "docker run"
 abbr drit "docker run -it"
 
@@ -55,7 +56,15 @@ abbr gs "git status"
 abbr k "kubectl"
 abbr ka "kubectl apply"
 abbr kaf "kubectl apply -f"
+abbr kd "kubectl delete"
+abbr kdf "kubectl delete -f"
 abbr kg "kubectl get"
+abbr kgd "kubectl get deployments"
+abbr kgj "kubectl get jobs"
+abbr kgns "kubectl get ns"
+abbr kgpo "kubectl get pods"
+abbr kgs "kubectl get services"
+abbr kl "kubectl logs"
 
 # ls
 if test -f /bin/lsd
@@ -79,10 +88,6 @@ alias mbsync="mbsync -c \"/home/ian/.config/isync/mbsyncrc\""
 
 # newsboat
 abbr nb "newsboat"
-
-# nvim
-abbr v "nvim"
-abbr vim "nvim"
 
 # ranger
 abbr r "ranger"
@@ -132,3 +137,6 @@ abbr twr "timew report"
 # terraform
 #abbr tf "terraform"
 
+# vim
+abbr v "$EDITOR"
+abbr vim "$EDITOR"
