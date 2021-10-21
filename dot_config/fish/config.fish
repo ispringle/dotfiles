@@ -25,20 +25,43 @@
 #  ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ; ', ;
 
 # Set PATH
-set -gx PATH $HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:$HOME/.emacs.d/bin/:$HOME/.npm-global/bin
+set -gx PATH $HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/bin/core_perl:/usr/local/go/bin/:/usr/local/go/bin/:$HOME/.emacs.d/bin/:$HOME/.npm-global/bin:$HOME/.local/share/nvim/lsp_servers
+
+set FISH_EXE_PATH (which fish)
+set TERMINAL_EMULATOR_PID (ps -o ppid= $fish_pid)
+set TERMINAL_EMULATOR (ps -p $TERMINAL_EMULATOR_PID -o command= | cut -d ' ' -f 1)
+
+# Walk up ppids until we get one that isn't fish
+while test $TERMINAL_EMULATOR = $FISH_EXE_PATH; or test "$TERMINAL_EMULATOR" = "fish";
+  set TERMINAL_EMULATOR_PID (ps -o ppid= $TERMINAL_EMULATOR_PID)
+  set TERMINAL_EMULATOR (ps -p $TERMINAL_EMULATOR_PID -o command= | cut -d ' ' -f 1)
+end
+
+# Do stuff here based on the terminal emulator/parent process of fish
+switch $TERMINAL_EMULATOR
+  case '*nvim*'
+    fish_default_key_bindings
+    if test -f (which nvr); and test $NVIM_LISTEN_ADDRESS
+      set --export EDITOR /usr/local/bin/nvr
+    else
+      # I guess just give up and accept nested nvim?
+    set --export EDITOR /usr/local/bin/nvim
+    end
+
+  case '*'
+    fish_vi_key_bindings
+    set --export EDITOR /usr/local/bin/nvim
+end
 
 # Set export/globals
 set --export SHELL /usr/local/bin/fish
-if command -v lvim > /dev/null
-  set --export EDITOR lvim
-else
-  set --export EDITOR /usr/local/bin/nvim
-end
 set --export VISUAL $EDITOR
 # set --export NOTMUCH_CONFIG ~/.config/notmuch/config
 # set --export SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 # set --export LEDGER_FILE ~/docs/budget/current
 set -e fish_greeting
+
+# This is needed if app-store sign-in isn't wanted
 set --export HOMEBREW_BREWFILE_APPSTORE 0
 
 # Ensure fisher package manager is installed

@@ -138,5 +138,5 @@ abbr twr "timew report"
 #abbr tf "terraform"
 
 # vim
-abbr v "$EDITOR"
-abbr vim "$EDITOR"
+alias v="$EDITOR"
+alias vim="$EDITOR"

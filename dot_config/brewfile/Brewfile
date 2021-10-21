@@ -28,6 +28,7 @@ brew flux
 brew fontconfig
 brew freetype
 brew fribidi
+brew fzf
 brew gcc
 brew gd
 brew gdbm
@@ -45,6 +46,7 @@ brew gnuplot
 brew gnutls
 brew go
 brew gobject-introspection
+brew gopls
 brew gpgme
 brew graphite2
 brew grep
@@ -54,6 +56,7 @@ brew gtk+3
 brew gtk-mac-integration
 brew guile
 brew harfbuzz
+brew helm
 brew hicolor-icon-theme
 brew hunspell
 brew icu4c
@@ -118,6 +121,7 @@ brew lzo
 brew m4
 brew md4c
 brew meson
+brew mmv
 brew mpdecimal
 brew mpfr
 brew msgpack
@@ -169,6 +173,7 @@ brew tree-sitter
 brew unbound
 brew unibilium
 brew webp
+brew wget
 brew x265
 brew xapian
 brew xmlto

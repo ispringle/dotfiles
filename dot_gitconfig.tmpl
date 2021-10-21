@@ -5,5 +5,20 @@
 	{{ else }}
 	email = {{ .email.personal | quote }}
 	{{ end }}
+
 [github]
 	user = pard68
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[diff]
+	colorMoved = zebra
+[rebase]
+	autoStash = true
+[push]
+	default = simple
+[gitlab]
+	user = pard
+[init]
+	defaultBranch = master
