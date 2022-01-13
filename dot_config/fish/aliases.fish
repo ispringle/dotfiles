@@ -4,6 +4,10 @@
 #   alias icat="kitty +kitten icat"
 # end
 
+# capture
+alias c="capture -config ~/.config/capture.ini"
+abbr cl "c -l"
+
 # chezmoi
 abbr cz "chezmoi"
 abbr cza "chezmoi add"
@@ -11,13 +15,16 @@ abbr cze "chezmoi edit"
 abbr czcd "chezmoi cd"
 
 # clear
-abbr c "clear -x"
+# abbr c "clear -x"
 abbr c! "clear"
 
 # configs
 abbr vi3 "$EDITOR ~/.config/i3/config"
 abbr fishrc "$EDITOR ~/.config/fish"
 abbr vimrc "$EDITOR ~/.config/nvim"
+
+# directory shortcuts
+abbr ghp "cd ~/git/hub/pard68/"
 
 # docker
 abbr d "docker"
@@ -90,33 +97,13 @@ alias mbsync="mbsync -c \"/home/ian/.config/isync/mbsyncrc\""
 abbr nb "newsboat"
 
 # ranger
-abbr r "ranger"
+# abbr r "ranger"
 
 # scrot
 alias scrot="scrot -z"
 abbr ss "scrot --select ~/docs/pics/scrot/%Y_%m_%d-%H:%M:%S.png"
 
-# taskbook
-#abbr tb "taskbook"
-#abbr tba "taskbook --archive"
-#abbr tbb "taskbook --begin"
-#abbr tbc "taskbook --check"
-#abbr tbcl "taskbook --clear"
-#abbr tbd "taskbook --delete"
-#abbr tbe "taskbook --edit"
-#abbr tbf "taskbook --find"
-#abbr tbh "taskbook --help"
-#abbr tbl "taskbook --list"
-#abbr tbm "taskbook --move"
-#abbr tbn "taskbook --note"
-#abbr tbp "taskbook --priority"
-#abbr tbr "taskbook --restore"
-#abbr tbs "taskbook --star"
-#abbr tbtl "taskbook --timeline"
-#abbr tbt "taskbook --task"
-#abbr tby "taskbook --copy"
-
-# taskwarrior
+# todo.txt
 abbr t "task"
 abbr ta "task add"
 abbr tde "task delete"
@@ -136,6 +123,9 @@ abbr twr "timew report"
 
 # terraform
 #abbr tf "terraform"
+
+# vlang
+alias vlang=/usr/local/bin/v
 
 # vim
 alias v="$EDITOR"
