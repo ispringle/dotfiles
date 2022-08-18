@@ -1,92 +1,57 @@
 #!/usr/bin/env sh
-
-# the scripting-addition must be loaded manually if
-# you are running yabai on macOS Big Sur. Uncomment
-# the following line to have the injection performed
-# when the config is executed during startup.
-#
-# for this to work you must configure sudo such that
-# it will be able to run the command without password
-#
-# see this wiki page for information:
-#  - https://github.com/koekeishiya/yabai/wiki/Installing-yabai-(latest-release)
-#
+# This file was generated from a literate dotfiles config.
+# This file should not be directly edited. Instead edit
+# the literate-dotfiles repo and then tangle the file.
+# The repo can be found at:
+# https://github.com/pard68/literate-dotfiles
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Boilerplate][Boilerplate:2]]
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-
+# Boilerplate:2 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:1]]
 # global settings
-yabai -m config mouse_follows_focus          on
-yabai -m config focus_follows_mouse          autofocus
-
+yabai -m config mouse_follows_focus          off
+yabai -m config focus_follows_mouse          off
+# Defaults:1 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:2]]
 yabai -m config window_placement             second_child
+# Defaults:2 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:3]]
 yabai -m config window_topmost               off
-
+# Defaults:3 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:4]]
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
 yabai -m config window_shadow                on
-
-yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
+# Defaults:4 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:5]]
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
-
-# borders
-# yabai -m config window_border                on
-# yabai -m config window_border_width          3
-# yabai -m config active_window_border_color   0xff775759
-# yabai -m config active_window_border_color   0xff66BB6A
-# yabai -m config normal_window_border_color   0xff505050
-# yabai -m config insert_window_border_color   0xffd75f5f
-# yabai -m config insert_window_border_color   0xffE57373
-
-yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
-yabai -m config split_ratio                  0.50
-yabai -m config auto_balance                 off
+# Defaults:5 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:6]]
 yabai -m config mouse_modifier               alt
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
-
-# general space settings
+# Defaults:6 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:7]]
 yabai -m config layout                       bsp
-yabai -m config top_padding                  26
-yabai -m config bottom_padding               20
-yabai -m config left_padding                 20
-yabai -m config right_padding                20
-yabai -m config window_gap                   10
-
-# Mouse support
-yabai -m config mouse_modifier               alt
-yabai -m config mouse_action1                move
-yabai -m config mouse_action2                resize
-
-# let spacebar handle bar
-SPACEBAR_HEIGHT=$(spacebar -m config height)
-yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
-
-### SIGNALS
-
-# Enable i3-gaps style "smart" gaps and borders
-# It only makes sense to have gaps/borders if there are > 1 windows in a space
-# env trick to make fish start up faster
-yabai -m signal --add event=window_created action="env HOME=/tmp fish $YABAI_SCRIPTS/smart.fish"
-yabai -m signal --add event=window_destroyed action="env HOME=/tmp fish $YABAI_SCRIPTS/smart.fish"
-yabai -m signal --add event=space_changed action="env HOME=/tmp fish $YABAI_SCRIPTS/smart.fish"
-
-# application launched for the first time doesn't send a window_created signal
-# same goes for application terminated
-yabai -m signal --add event=application_launched action="env HOME=/tmp fish $YABAI_SCRIPTS/smart.fish"
-yabai -m signal --add event=application_terminated action="env HOME=/tmp fish $YABAI_SCRIPTS/smart.fish"
-
-# switch focus on a closed window
-yabai -m signal --add event=window_destroyed action="env HOME=/tmp fish $YABAI_SCRIPTS/focus_yabai"
-
-### EXCEPTIONS
-# float system preferences
+# Defaults:7 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:8]]
+# SPACEBAR_HEIGHT=$(spacebar -m config height)
+# yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
+# Defaults:8 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:9]]
 yabai -m rule --add app='^System Information$' manage=off
 yabai -m rule --add app='^System Preferences$' manage=off
 yabai -m rule --add title='Preferences$' manage=off
-
-# float settings windows
 yabai -m rule --add title='Settings$' manage=off
-
+# Defaults:9 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Defaults][Defaults:10]]
 echo "yabai configuration loaded.."
+# Defaults:10 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Stacked Spaces][Stacked Spaces:1]]
+yabai -m signal --add event=window_created action="~/.config/yabai/refresh.sh"
+yabai -m signal --add event=window_destroyed action="~/.config/yabai/refresh.sh"
+# Stacked Spaces:1 ends here
+# [[file:../../git/hub/pard68/literate-dotfiles/README.org::*Comms Space][Comms Space:1]]
+
+# Comms Space:1 ends here

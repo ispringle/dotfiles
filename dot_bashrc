@@ -158,3 +158,4 @@ if [ -f ~/.gh_token ]; then
 fi
 
 #source /home/ian/.config/broot/launcher/bash/br
+. "$HOME/.cargo/env"

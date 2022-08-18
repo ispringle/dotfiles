@@ -1,12 +1,12 @@
 # terminal emulator specific
 # if xprop -notype -id $WINDOWID 2>&1| awk '/^WM_CLASS.*kitty/' | grep "kitty" > /dev/null
-#   alias ssh="kitty +kitten ssh"
-#   alias icat="kitty +kitten icat"
+# alias ssh="kitty +kitten ssh"
+# alias icat="kitty +kitten icat"
 # end
 
 # capture
-alias c="capture -config ~/.config/capture.ini"
-abbr cl "c -l"
+# alias c="capture -config ~/.config/capture.ini"
+# abbr cl "c -l"
 
 # chezmoi
 abbr cz "chezmoi"
