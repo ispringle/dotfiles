@@ -1,2 +1,10 @@
-DS_Store
-dot_DS_store
+# macOS
+.DS_Store
+
+# Temporary files
+*~
+*.swp
+*.swo
+
+# Local overrides (not tracked)
+*.local
