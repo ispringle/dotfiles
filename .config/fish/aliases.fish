@@ -1,0 +1,22 @@
+# git
+abbr g git
+abbr ga "git add"
+abbr ga. "git add ."
+abbr gb "git branch"
+abbr gbd "git branch -D"
+abbr gc "git commit"
+abbr gca "git commit --amend"
+abbr gcm "git commit -m"
+abbr gcm!! "git add .; and git commit -m "Update!"; and git push"
+abbr gcl "git clone"
+abbr gco "git checkout"
+abbr gd "git diff"
+abbr gi gitignore
+abbr gl "git log"
+abbr gm "git merge"
+abbr gpl "git pull"
+abbr gps "git push"
+abbr gps! "git push --force"
+abbr gpsu "git push -u origin master"
+abbr gri "git rebase -i"
+abbr gs "git status"

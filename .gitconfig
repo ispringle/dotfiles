@@ -1,0 +1,13 @@
+[user]
+	name = Ian S. Pringle
+	email = ian@dapringles.com
+[includeIf "gitdir:~/git/hub/Banno/**"]
+	path = ~/.gitconfig-banno
+[pull]
+	ff = only
+[push]
+	autoSetupRemote = true
+[github]
+	user = ispringle
+[init]
+	defaultBranch = master

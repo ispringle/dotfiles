@@ -1,0 +1,25 @@
+if status is-interactive
+    # Commands to run in interactive sessions can go here
+end
+
+source /opt/homebrew/opt/asdf/libexec/asdf.fish
+fish_add_path ~/.rd/bin
+
+# if not functions -q fisher
+#    set -q XDG_CONFIG_HOME; or set XDG_CONFIG_HOME ~/.config
+#    curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+# end
+
+source ~/.config/envvars/*
+source ~/.config/fish/eat.fish
+
+function fish_greeting
+  set Fishers_of_Men \
+  "Then He said to them, “Follow Me, and I will make you fishers of men.”\n\t-Matthew 4:19" \
+  "And Jesus said to them, “Follow me, and I will make you become fishers of men.”\n\t-Mark 1:17" \
+  "And Jesus said to Simon, “Do not be afraid; from now on you will be catching men.”\n\t -Luke 5:10"
+echo "<>< <>< <>< <>< <><
+<>< <>< [2;31m><>[0m[1;2m[0m <>< <><
+<>< <>< <>< <>< <><"
+echo -e (random choice $Fishers_of_Men)
+end

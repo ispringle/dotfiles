@@ -1,0 +1,8 @@
+# Files to encrypt with yadm
+# Use GPG encryption for sensitive data
+
+# Environment variable secrets
+.config/envvars/artifactory.sh
+.config/envvars/github.sh
+
+# Add other secret files here as needed
