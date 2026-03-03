@@ -5,4 +5,7 @@
 .config/envvars/artifactory.sh
 .config/envvars/github.sh
 
+# NPM config (work machine only)
+.npmrc##class.work
+
 # Add other secret files here as needed
